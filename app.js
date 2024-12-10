@@ -1,12 +1,13 @@
+// Inisialisasi Chart.js
 const ctx = document.getElementById("orbitChart").getContext("2d");
 let orbitChart = new Chart(ctx, {
     type: "line",
     data: {
-        labels: Array.from({ length: 360 }, (_, i) => i),
+        labels: Array.from({ length: 360 }, (_, i) => i), // Sudut dari 0 hingga 360 derajat
         datasets: [
             {
                 label: "Orbit Bumi",
-                data: generateOrbitData(1),
+                data: generateOrbitData(1), // Data awal untuk orbit Bumi
                 borderColor: "blue",
                 fill: false,
                 tension: 0.1,
@@ -32,53 +33,56 @@ let orbitChart = new Chart(ctx, {
     },
 });
 
+// Fungsi untuk menghasilkan data orbit elips
 function generateOrbitData(semiMajorAxis) {
     const data = [];
     for (let i = 0; i < 360; i++) {
         const radians = (i * Math.PI) / 180;
-        const distance = semiMajorAxis * (1 - 0.0167 * Math.cos(radians)); // simulasi orbit elips sederhana
+        const distance = semiMajorAxis * (1 - 0.0167 * Math.cos(radians)); // Persamaan elips
         data.push(distance);
     }
     return data;
 }
 
+// Fungsi untuk memperbarui chart berdasarkan planet yang dipilih
 function updateChart() {
     const object = document.getElementById("objectSelector").value;
     let semiMajorAxis;
 
+    // Menentukan sumbu semi-mayor berdasarkan pilihan pengguna
     switch (object) {
         case "earth":
-            semiMajorAxis = 1; // AU
+            semiMajorAxis = 1;
             break;
         case "mars":
-            semiMajorAxis = 1.52; // AU
+            semiMajorAxis = 1.52;
             break;
         case "moon":
-            semiMajorAxis = 0.00257; // AU
+            semiMajorAxis = 0.00257;
             break;
         case "jupiter":
-            semiMajorAxis = 5.2; // AU
+            semiMajorAxis = 5.2;
             break;
         case "venus":
-            semiMajorAxis = 0.72; // AU
+            semiMajorAxis = 0.72;
             break;
         case "saturn":
-            semiMajorAxis = 9.58; // AU
+            semiMajorAxis = 9.58;
             break;
         case "neptune":
-            semiMajorAxis = 30.07; // AU
+            semiMajorAxis = 30.07;
             break;
         default:
-            console.warn(`Object "${object}" is not recognized. Using default value.`);
             semiMajorAxis = 1;
     }
 
+    // Perbarui data dan label chart
     orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);
     orbitChart.data.datasets[0].label = `Orbit ${capitalize(object)}`;
     orbitChart.update();
 }
 
+// Fungsi untuk kapitalisasi huruf pertama string
 function capitalize(str) {
-    if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
