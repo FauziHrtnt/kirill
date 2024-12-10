@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerik Orbit Satelit dan Planet</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Orbit Planet di Tata Surya</h1>
+        <p>Mengetahui data orbit planet dengan grafik interaktif.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Visualisasi Orbit -->
+        <section id="orbit-visual">
+            <h2>Visualisasi Orbit</h2>
+            <canvas id="orbitChart"></canvas>
+        </section>
+
+        <!-- Informasi Orbit -->
+        <section id="info">
+            <h2>Informasi Orbit</h2>
+            <p>Pilih planet untuk melihat informasi numerik orbitnya.</p>
+            <select id="objectSelector" onchange="updateChart()">
+                <option value="earth">Bumi</option>
+                <option value="mars">Mars</option>
+                <option value="moon">Bulan</option>
+                <option value="jupiter">Jupiter</option>
+                <option value="venus">Venus</option>
+                <option value="saturn">Saturnus</option>
+                <option value="neptune">Neptunus</option>
+            </select>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Numerik Orbit. Dibuat dengan ❤ oleh AN.</p>
+    </footer>
+</body>
+</html>
