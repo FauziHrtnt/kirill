@@ -73,10 +73,10 @@ function updateChart() {
     }
 
     orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);
-    orbitChart.data.datasets[0].label = `Orbit ${capitalize(object)}`;
+    orbitChart.data.datasets[0].label = Orbit ${capitalize(object)};
     orbitChart.update();
 }
 
 function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
