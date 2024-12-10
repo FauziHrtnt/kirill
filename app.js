@@ -69,14 +69,16 @@ function updateChart() {
             semiMajorAxis = 30.07; // AU
             break;
         default:
+            console.warn(`Object "${object}" is not recognized. Using default value.`);
             semiMajorAxis = 1;
     }
 
     orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);
-    orbitChart.data.datasets[0].label = Orbit ${capitalize(object)};
+    orbitChart.data.datasets[0].label = `Orbit ${capitalize(object)}`;
     orbitChart.update();
 }
 
 function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
