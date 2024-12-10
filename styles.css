@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,10 +10,11 @@ body {
     align-items: center;
 }
 
+/* Header Styles */
 header {
     text-align: center;
     padding: 20px;
-    background-color: #2b5797;
+    background-color: #2b5797; /* Warna biru gelap */
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -27,6 +29,7 @@ header p {
     margin: 5px 0;
 }
 
+/* Main Content Styles */
 main {
     padding: 20px;
     width: 90%;
@@ -60,6 +63,7 @@ canvas {
     border-radius: 8px;
 }
 
+/* Dropdown Styles */
 select {
     display: block;
     margin: 15px auto;
@@ -85,6 +89,7 @@ option {
     color: #333;
 }
 
+/* Footer Styles */
 footer {
     margin-top: 20px;
     padding: 10px;
@@ -100,6 +105,7 @@ footer p {
     margin: 0;
 }
 
+/* Responsiveness */
 @media (max-width: 768px) {
     header h1 {
         font-size: 2rem;
