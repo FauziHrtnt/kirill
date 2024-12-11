@@ -1,95 +1,296 @@
-<script>
-    // Fungsi untuk menghasilkan data orbit berbentuk elips
-    function generateOrbitData(semiMajorAxis) {
-        const data = [];
-        const eccentricity = 0.1; // Eksentrisitas orbit
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Orbit Planet Tata Surya</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  
+    <style>  
+        /* Global Styles */  
+        body {  
+            font-family: 'Poppins', sans-serif;  
+            margin: 0;  
+            padding: 0;  
+            background: linear-gradient(135deg, #1e3c72, #2a5298);  
+            color: #fff;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+            min-height: 100vh;  
+        }  
 
-        for (let angle = 0; angle <= 360; angle++) {
-            const radian = (angle * Math.PI) / 180;
-            const r = semiMajorAxis * (1 - eccentricity ** 2) / (1 + eccentricity * Math.cos(radian));
-            data.push(r);
-        }
-        return data;
-    }
+        /* Header Styles */  
+        header {  
+            text-align: center;  
+            padding: 30px;  
+            background: rgba(0, 0, 0, 0.3);  
+            width: 100%;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  
+        }  
 
-    // Inisialisasi grafik
-    const ctx = document.getElementById("orbitChart").getContext("2d");
-    let orbitChart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: Array.from({ length: 361 }, (_, i) => i),
-            datasets: [
-                {
-                    label: "Orbit Bumi",
-                    data: generateOrbitData(1),
-                    borderColor: "blue",
-                    fill: false,
-                    tension: 0.1,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: "Sudut Orbit (derajat)",
-                    },
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: "Jarak dari Pusat (AU)",
-                    },
-                },
-            },
-        },
-    });
+        header h1 {  
+            font-size: 2.8rem;  
+            margin: 0;  
+        }  
 
-    // Fungsi untuk memperbarui grafik
-    function updateChart() {
-        const object = document.getElementById("objectSelector").value;
-        let semiMajorAxis;
+        header p {  
+            font-size: 1.5rem;  
+            margin: 10px 0 0;  
+        }  
 
-        // Menambahkan pilihan planet baru
-        switch (object) {
-            case "earth":
-                semiMajorAxis = 1; // AU
-                break;
-            case "mars":
-                semiMajorAxis = 1.52; // AU
-                break;
-            case "moon":
-                semiMajorAxis = 0.00257; // AU
-                break;
-            case "jupiter":
-                semiMajorAxis = 5.2; // AU
-                break;
-            case "venus":
-                semiMajorAxis = 0.72; // AU
-                break;
-            case "saturn":
-                semiMajorAxis = 9.58; // AU
-                break;
-            case "neptune":
-                semiMajorAxis = 30.07; // AU
-                break;
-            default:
-                semiMajorAxis = 1; // Default to Earth
-        }
+        /* Main Content Styles */  
+        main {  
+            padding: 20px;  
+            width: 90%;  
+            max-width: 800px;  
+        }  
 
-        // Memperbarui data dan label grafik
-        orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);
-        orbitChart.data.datasets[0].label = `Orbit ${object.charAt(0).toUpperCase() + object.slice(1)}`;
-        orbitChart.update();
-    }
+        h2 {  
+            margin: 20px 0 10px;  
+            font-size: 2rem;  
+            color: #fbc531;  
+            text-align: center;  
+        }  
 
-    // Tambahkan event listener pada dropdown
-    document.getElementById("objectSelector").addEventListener("change", updateChart);
-</script>
+        section {  
+            margin-bottom: 30px;  
+            padding: 20px;  
+            background: rgba(255, 255, 255, 0.1);  
+            border-radius: 12px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  
+            backdrop-filter: blur(5px);  
+        }  
+
+        canvas {  
+            display: block;  
+            margin: 20px auto;  
+            max-width: 100%;  
+            height: 400px;  
+            background: rgba(255, 255, 255, 0.2);  
+            border: 1px solid rgba(255, 255, 255, 0.3);  
+            border-radius: 12px;  
+        }  
+
+        /* Dropdown Styles */  
+        select {  
+            display: block;  
+            margin: 0 auto 15px;  
+            padding: 12px 20px;  
+            font-size: 1.2rem;  
+            border: none;  
+            border-radius: 8px;  
+            background-color: #fbc531;  
+            color: #1e3c72;  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  
+        }  
+
+        select:focus {  
+            outline: none;  
+            box-shadow: 0 0 10px rgba(251, 197, 49, 0.8);  
+        }  
+
+        /* Footer Styles */  
+        footer {  
+            margin-top: auto;  
+            padding: 10px;  
+            text-align: center;  
+            background: rgba(0, 0, 0, 0.3);  
+            color: #fff;  
+            width: 100%;  
+            font-size: 1rem;  
+        }  
+
+        footer p {  
+            margin: 0;  
+        }  
+
+        /* Responsiveness */  
+        @media (max-width: 768px) {  
+            header h1 {  
+                font-size: 2.5rem;  
+            }  
+
+            header p {  
+                font-size: 1.2rem;  
+            }  
+
+            h2 {  
+                font-size: 1.7rem;  
+            }  
+
+            select {  
+                font-size: 1rem;  
+            }  
+
+            canvas {  
+                height: 300px;  
+            }  
+        }  
+    </style>  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+</head>  
+<body>  
+    <header>  
+        <h1>Orbit Planet Tata Surya</h1>  
+        <p>Eksplorasi tata surya dengan grafik orbit interaktif.</p>  
+    </header>  
+
+    <main>  
+        <section id="orbit-visual">  
+            <h2>Visualisasi Orbit</h2>  
+            <canvas id="orbitChart"></canvas>  
+        </section>  
+
+        <section id="orbit-info">  
+            <h2>Informasi Orbit</h2>  
+            <div style="text-align: center; margin-bottom: 15px;">  
+                <p>Pilih planet untuk melihat orbitnya:</p>  
+            </div>  
+            <select id="objectSelector">  
+                <option value="earth">Bumi</option>  
+                <option value="mars">Mars</option>  
+                <option value="venus">Venus</option>  
+                <option value="jupiter">Jupiter</option>  
+                <option value="saturn">Saturnus</option>  
+                <option value="neptune">Neptunus</option>  
+                <option value="uranus">Uranus</option>  
+                <option value="mercury">Merkurius</option>  
+                <option value="pluto">Pluto</option>  
+            </select>  
+        </section>  
+    </main>  
+
+    <footer>  
+        <p>&copy; 2024 Orbit Planet. Dibuat dengan &#10084; oleh AN.</p>  
+    </footer>  
+
+    <script>  
+        document.addEventListener("DOMContentLoaded", () => {  
+            const canvas = document.getElementById("orbitChart");  
+            const ctx = canvas.getContext("2d");  
+
+            let orbitChart = new Chart(ctx, {  
+                type: "line",  
+                data: {  
+                    labels: Array.from({ length: 360 }, (_, i) => i),  
+                    datasets: [  
+                        {  
+                            label: "Orbit Bumi",  
+                            data: generateOrbitData(1),  
+                            borderColor: "orange",  
+                            fill: false,  
+                            tension: 0.2,  
+                            borderWidth: 2  
+                        },  
+                    ],  
+                },  
+                options: {  
+                    responsive: true,  
+                    plugins: {  
+                        legend: {  
+                            labels: {  
+                                color: 'white',  
+                            },  
+                        },  
+                    },  
+                    scales: {  
+                        x: {  
+                            title: {  
+                                display: true,  
+                                text: "Sudut Orbit (derajat)",  
+                                color: '#fbc531',  
+                                font: {  
+                                    size: 16,  
+                                    weight: 'bold'  
+                                },  
+                            },  
+                            ticks: {  
+                                color: '#fff',  
+                                font: {  
+                                    size: 14,  
+                                },  
+                            },  
+                        },  
+                        y: {  
+                            title: {  
+                                display: true,  
+                                text: "Jarak dari Pusat (AU)",  
+                                color: '#fbc531',  
+                                font: {  
+                                    size: 16,  
+                                    weight: 'bold'  
+                                },  
+                            },  
+                            ticks: {  
+                                color: '#fff',  
+                                font: {  
+                                    size: 14,  
+                                },  
+                            },  
+                        },  
+                    },  
+                },  
+            });  
+
+            function generateOrbitData(semiMajorAxis) {  
+                const data = [];  
+                for (let i = 0; i < 360; i++) {  
+                    const radians = (i * Math.PI) / 180;  
+                    const distance = semiMajorAxis * (1 - 0.0167 * Math.cos(radians));  
+                    data.push(distance);  
+                }  
+                return data;  
+            }  
+
+            function updateChart() {  
+                const object = document.getElementById("objectSelector").value;  
+                let semiMajorAxis;  
+
+                switch (object) {  
+                    case "earth":  
+                        semiMajorAxis = 1;  
+                        break;  
+                    case "mars":  
+                        semiMajorAxis = 1.52;  
+                        break;  
+                    case "venus":  
+                        semiMajorAxis = 0.72;  
+                        break;  
+                    case "jupiter":  
+                        semiMajorAxis = 5.2;  
+                        break;  
+                    case "saturn":  
+                        semiMajorAxis = 9.58;  
+                        break;  
+                    case "neptune":  
+                        semiMajorAxis = 30.07;  
+                        break;  
+                    case "uranus":  
+                        semiMajorAxis = 19.22;  
+                        break;  
+                    case "mercury":  
+                        semiMajorAxis = 0.39;  
+                        break;  
+                    case "pluto":  
+                        semiMajorAxis = 39.48;  
+                        break;  
+                    default:  
+                        semiMajorAxis = 1;  
+                }  
+
+                orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);  
+                orbitChart.data.datasets[0].label = `Orbit ${capitalize(object)}`;  
+                orbitChart.update();  
+            }  
+
+            function capitalize(str) {  
+                return str.charAt(0).toUpperCase() + str.slice(1);  
+            }  
+
+            document.getElementById("objectSelector").addEventListener("change", updateChart);  
+        });  
+    </script>  
+</body>  
+</html>
