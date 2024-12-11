@@ -22,26 +22,28 @@
         /* Header Styles */  
         header {  
             text-align: center;  
-            padding: 30px;  
+            padding: 20px;  
             background: rgba(0, 0, 0, 0.3);  
             width: 100%;  
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  
+            position: fixed;  
+            top: 0;  
+            text-align: center; 
+            z-index: 1000;  
         }  
 
         header h1 {  
-            font-size: 2.8rem;  
+            font-size: 2.5rem;  
             margin: 0;  
-        }  
-
-        header p {  
-            font-size: 1.5rem;  
-            margin: 10px 0 0;  
+            text-align: center; 
         }  
 
         /* Main Content Styles */  
         main {  
+            margin-top: 100px;  
             padding: 20px;  
             width: 90%;  
+            text-align: center; 
             max-width: 800px;  
         }  
 
@@ -55,10 +57,38 @@
         section {  
             margin-bottom: 30px;  
             padding: 20px;  
+            text-align: center; 
             background: rgba(255, 255, 255, 0.1);  
             border-radius: 12px;  
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  
             backdrop-filter: blur(5px);  
+        }  
+
+        .selector-container {  
+            background-color: #003366; /* Latar belakang biru tua */  
+            padding: 20px; /* Ruang dalam */  
+            margin: 0 auto; /* Pusatkan */  
+            border-radius: 12px; /* Sudut yang membulat */  
+            text-align: center; /* Teks rata tengah */  
+            width: 100%; /* Lebar penuh */  
+            max-width: 400px; /* Lebar maksimum */  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Efek bayangan */  
+        }  
+
+        .selector-container p {  
+            color: #fbc531; /* Teks kuning */  
+            font-size: 1.2rem; /* Ukuran font */  
+            margin-bottom: 15px; /* Jarak bawah */  
+        }  
+
+        #objectSelector {  
+            padding: 10px; /* Ruang dalam */  
+            font-size: 1rem; /* Ukuran font */  
+            color: #000; /* Warna teks */  
+            border: 1px solid #fbc531; /* Warna border */  
+            border-radius: 5px; /* Sudut membulat */  
+            background-color: #ffcc00; /* Latar belakang kuning */  
+            cursor: pointer; /* Tanda kursor menyerupai pointer */  
         }  
 
         canvas {  
@@ -69,26 +99,6 @@
             background: rgba(255, 255, 255, 0.2);  
             border: 1px solid rgba(255, 255, 255, 0.3);  
             border-radius: 12px;  
-        }  
-
-        /* Dropdown Styles */  
-        select {  
-            display: block;  
-            margin: 0 auto 15px;  
-            padding: 12px 20px;  
-            font-size: 1.2rem;  
-            border: none;  
-            border-radius: 8px;  
-            background-color: #fbc531;  
-            color: #1e3c72;  
-            cursor: pointer;  
-            transition: all 0.3s ease;  
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  
-        }  
-
-        select:focus {  
-            outline: none;  
-            box-shadow: 0 0 10px rgba(251, 197, 49, 0.8);  
         }  
 
         /* Footer Styles */  
@@ -103,25 +113,18 @@
         }  
 
         footer p {  
-            margin: 0;  
+            margin: 0;
+            text-align: center;   
         }  
 
         /* Responsiveness */  
         @media (max-width: 768px) {  
             header h1 {  
-                font-size: 2.5rem;  
-            }  
-
-            header p {  
-                font-size: 1.2rem;  
+                font-size: 2rem;  
             }  
 
             h2 {  
                 font-size: 1.7rem;  
-            }  
-
-            select {  
-                font-size: 1rem;  
             }  
 
             canvas {  
@@ -129,15 +132,18 @@
             }  
         }  
     </style>  
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
 </head>  
 <body>  
     <header>  
         <h1>Orbit Planet Tata Surya</h1>  
-        <p>Eksplorasi tata surya dengan grafik orbit interaktif.</p>  
     </header>  
 
     <main>  
+        <section id="home">  
+            <h2>Selamat Datang di Planetaria</h2>  
+            <p>Jelajahi keindahan tata surya dan pelajari orbit setiap planet. Website ini memberikan visualisasi interaktif dan informasi menarik tentang planet-planet di tata surya kita.</p>  
+        </section>  
+
         <section id="orbit-visual">  
             <h2>Visualisasi Orbit</h2>  
             <canvas id="orbitChart"></canvas>  
@@ -145,20 +151,23 @@
 
         <section id="orbit-info">  
             <h2>Informasi Orbit</h2>  
-            <div style="text-align: center; margin-bottom: 15px;">  
+            <div class="selector-container">  
                 <p>Pilih planet untuk melihat orbitnya:</p>  
+                <select id="objectSelector">  
+                    <option value="mercury">Merkurius</option>  
+                    <option value="venus">Venus</option>  
+                    <option value="earth">Bumi</option>  
+                    <option value="mars">Mars</option>  
+                    <option value="jupiter">Jupiter</option>  
+                    <option value="saturn">Saturnus</option>  
+                    <option value="uranus">Uranus</option>  
+                    <option value="neptune">Neptunus</option>  
+                    <option value="pluto">Pluto</option>  
+                </select>  
             </div>  
-            <select id="objectSelector">  
-                <option value="earth">Bumi</option>  
-                <option value="mars">Mars</option>  
-                <option value="venus">Venus</option>  
-                <option value="jupiter">Jupiter</option>  
-                <option value="saturn">Saturnus</option>  
-                <option value="neptune">Neptunus</option>  
-                <option value="uranus">Uranus</option>  
-                <option value="mercury">Merkurius</option>  
-                <option value="pluto">Pluto</option>  
-            </select>  
+            <div id="planet-info" style="margin-top: 20px; text-align: center;">  
+                <p>Pilih sebuah planet untuk melihat informasinya.</p>  
+            </div>  
         </section>  
     </main>  
 
@@ -166,7 +175,9 @@
         <p>&copy; 2024 Orbit Planet. Dibuat dengan &#10084; oleh AN.</p>  
     </footer>  
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
     <script>  
+        // JavaScript untuk menangani chart dan interaktivitas  
         document.addEventListener("DOMContentLoaded", () => {  
             const canvas = document.getElementById("orbitChart");  
             const ctx = canvas.getContext("2d");  
@@ -247,42 +258,55 @@
             function updateChart() {  
                 const object = document.getElementById("objectSelector").value;  
                 let semiMajorAxis;  
+                let planetInfo = "";  
 
-                switch (object) {  
-                    case "earth":  
-                        semiMajorAxis = 1;  
-                        break;  
-                    case "mars":  
-                        semiMajorAxis = 1.52;  
+                switch (object) {   
+                    case "mercury":  
+                        semiMajorAxis = 0.39;  
+                        planetInfo = "<strong>Merkurius:</strong> Planet terkecil dan terdekat dengan Matahari. Memiliki suhu ekstrem karena hampir tidak memiliki atmosfer.";  
                         break;  
                     case "venus":  
                         semiMajorAxis = 0.72;  
+                        planetInfo = "<strong>Venus:</strong> Planet terpanas di tata surya dengan atmosfer yang sangat tebal dan efek rumah kaca ekstrem.";  
+                        break;  
+                    case "earth":  
+                        semiMajorAxis = 1;  
+                        planetInfo = "<strong>Bumi:</strong> Satu-satunya planet yang diketahui mendukung kehidupan, dengan atmosfer kaya oksigen dan air.";  
+                        break;  
+                    case "mars":  
+                        semiMajorAxis = 1.52;  
+                        planetInfo = "<strong>Mars:</strong> Disebut 'Planet Merah' karena permukaannya yang berkarat. Memiliki gunung tertinggi di tata surya.";  
                         break;  
                     case "jupiter":  
                         semiMajorAxis = 5.2;  
+                        planetInfo = "<strong>Jupiter:</strong> Planet terbesar di tata surya dengan 'Bintik Merah Besar', badai raksasa yang berlangsung lama.";  
                         break;  
                     case "saturn":  
                         semiMajorAxis = 9.58;  
-                        break;  
-                    case "neptune":  
-                        semiMajorAxis = 30.07;  
+                        planetInfo = "<strong>Saturnus:</strong> Dikenal dengan cincinnya yang indah, terdiri dari partikel es dan debu.";  
                         break;  
                     case "uranus":  
                         semiMajorAxis = 19.22;  
+                        planetInfo = "<strong>Uranus:</strong> Planet biru-hijau dengan sumbu rotasi yang sangat miring.";  
                         break;  
-                    case "mercury":  
-                        semiMajorAxis = 0.39;  
+                    case "neptune":  
+                        semiMajorAxis = 30.07;  
+                        planetInfo = "<strong>Neptunus:</strong> Planet biru dengan angin tercepat di tata surya, mencapai 2.100 km/jam.";  
                         break;  
                     case "pluto":  
                         semiMajorAxis = 39.48;  
+                        planetInfo = "<strong>Pluto:</strong> Dahulu planet ke-9, kini diklasifikasikan sebagai planet katai dengan orbit yang eksentrik.";  
                         break;  
                     default:  
                         semiMajorAxis = 1;  
+                        planetInfo = "Pilih sebuah planet untuk melihat informasinya.";  
                 }  
 
                 orbitChart.data.datasets[0].data = generateOrbitData(semiMajorAxis);  
                 orbitChart.data.datasets[0].label = `Orbit ${capitalize(object)}`;  
                 orbitChart.update();  
+
+                document.getElementById("planet-info").innerHTML = planetInfo;  
             }  
 
             function capitalize(str) {  
@@ -290,7 +314,10 @@
             }  
 
             document.getElementById("objectSelector").addEventListener("change", updateChart);  
+
+            // Trigger update on initial load  
+            updateChart();  
         });  
-    </script>  
+    </script>   
 </body>  
 </html>
